@@ -3,20 +3,22 @@ export type ToAsync<T extends Fn> = (...args: Parameters<T>) => Promise<ReturnTy
 export const WORKER = Symbol();
 export type WithWorker = { [WORKER]?: Worker };
 
-export const createWorker = <T extends Fn>({ fn, context = [], transfer = [] }: {
+export const createWorker = <T extends Fn>({ fn, context = [], transfer = [], subscription }: {
   fn: T | string,
   context?: (Fn | string)[],
-  transfer?: Transferable[]
+  transfer?: Transferable[],
+  subscription?: (d: any) => void
 }): ToAsync<T> & WithWorker => {
   const b = new Blob([createWorkerSetup(fn, context)], { type: 'text/javascript' });
   const url = URL.createObjectURL(b);
   const w = new Worker(url);
+  URL.revokeObjectURL(url);
   const f = function (...args: Parameters<T>): Promise<ReturnType<T>> {
     queueMicrotask(() => w.postMessage(args, transfer)); // must run after promise is set!
     return new Promise<ReturnType<T>>((res, rej) => {
       w.onmessage = ({ data }) => {
+        subscription?.(data);
         res(data);
-        URL.revokeObjectURL(url);
       };
       w.onerror = rej;
     });

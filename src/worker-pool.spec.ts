@@ -1,4 +1,4 @@
-import WorkerPool from './worker-pool';
+import { WorkerPool } from './worker-pool';
 
 describe('worker pool', function () {
   it('should be 1', async function () {

@@ -2,16 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.unlock = exports.lock = exports.createMutex = exports.createSharedView = exports.split = exports.terminateWorker = exports.createWorker = exports.WORKER = void 0;
 exports.WORKER = Symbol();
-const createWorker = ({ fn, context = [], transfer = [] }) => {
+const createWorker = ({ fn, context = [], transfer = [], subscription }) => {
     const b = new Blob([createWorkerSetup(fn, context)], { type: 'text/javascript' });
     const url = URL.createObjectURL(b);
     const w = new Worker(url);
+    URL.revokeObjectURL(url);
     const f = function (...args) {
         queueMicrotask(() => w.postMessage(args, transfer)); // must run after promise is set!
         return new Promise((res, rej) => {
             w.onmessage = ({ data }) => {
+                subscription === null || subscription === void 0 ? void 0 : subscription(data);
                 res(data);
-                URL.revokeObjectURL(url);
             };
             w.onerror = rej;
         });

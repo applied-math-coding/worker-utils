@@ -1,4 +1,4 @@
-import { createMutex, createSharedView, createWorker, terminateWorker } from '../src/worker.utils';
+import { createMutex, createSharedView, createWorker, terminateWorker } from './worker.utils';
 
 describe('basic test', function () {
   it('should be 3', async function () {
@@ -82,6 +82,25 @@ describe('worker using shared-data', function () {
       }
     })(sharedData);
     expect(sharedData[0]).toEqual(1);
+  });
+});
+
+describe('worker using subscription', function () {
+  it('should run without exception', async function () {
+    const promises = [1, 2].map(() => new Promise<void>(
+      resolve => createWorker({
+        fn: () => {
+          for (let idx = 0; idx < 10; idx++) {
+            postMessage(idx);
+          }
+        },
+        subscription: d => {
+          console.log(d);
+          (d === 9) && resolve();
+        }
+      })()
+    ));
+    await Promise.all(promises);
   });
 });
 

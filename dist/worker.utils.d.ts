@@ -4,10 +4,11 @@ export declare const WORKER: unique symbol;
 export declare type WithWorker = {
     [WORKER]?: Worker;
 };
-export declare const createWorker: <T extends Fn>({ fn, context, transfer }: {
+export declare const createWorker: <T extends Fn>({ fn, context, transfer, subscription }: {
     fn: string | T;
     context?: (string | Fn)[] | undefined;
     transfer?: Transferable[] | undefined;
+    subscription?: ((d: any) => void) | undefined;
 }) => ToAsync<T> & WithWorker;
 export declare function terminateWorker(f: WithWorker): void;
 export declare function split(n: number, steps: number): number[][];
