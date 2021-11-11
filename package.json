@@ -1,6 +1,6 @@
 {
-  "name": "worker-utils",
-  "version": "1.0.1",
+  "name": "@applied.math.coding/worker-utils",
+  "version": "1.0.2",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/applied-math-coding/worker-utils.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "applied.math.coding@gmail.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/applied-math-coding/worker-utils/issues"
