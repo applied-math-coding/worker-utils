@@ -1,8 +1,8 @@
 {
   "name": "worker-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "types": "./dist",
   "scripts": {
     "build": "npm run clean && tsc --project ./tsconfig.json",
