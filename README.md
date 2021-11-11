@@ -1,9 +1,10 @@
 # worker-utils
-A small package that intends to facilitate the use of <b>workers</b> in JavaScript.<br><br>
-It supports the use of <b>ownership transferal</b>, <b>shared data</b> and <b>structured clones</b>.<br><br>
-Moreover, it provides utilities like <b>mutex</b> for synchronization between worker-threads.<br><br>
-No need to put parallel running code into its own file, all is done inline!<br><br>
-Type declarations are included in the package to make it usable within a <b>TypeScript</b> project.
+* A small package that intends to facilitate the use of <b>workers</b> in the browser.<br><br>
+* It supports the use of <b>ownership transferal</b>, <b>shared data</b> and <b>structured clones</b>.<br><br>
+* It provides utilities like <b>mutex</b> for synchronization between worker-threads.<br><br>
+* No need to put parallel running code into its own file, all is done inline!<br><br>
+* Type declarations are included in the package to make it usable within a <b>TypeScript</b> project.<br><br>
+* Tested on latest Chrome and Firefox with Karma.
 
 # Installation
 $ npm i @applied.math.coding/worker-utils
