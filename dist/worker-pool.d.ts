@@ -1,5 +1,5 @@
 import { Fn } from './worker.utils';
-export default class WorkerPool {
+export declare class WorkerPool {
     private uid;
     private maxWorkers;
     private scheduled;

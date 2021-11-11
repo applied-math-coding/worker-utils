@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WorkerPool = void 0;
 const worker_utils_1 = require("./worker.utils");
 class Task {
     constructor({ id, fn, args, context = [], transfer = [], resolve, reject }) {
@@ -64,5 +65,5 @@ class WorkerPool {
         }
     }
 }
-exports.default = WorkerPool;
+exports.WorkerPool = WorkerPool;
 //# sourceMappingURL=worker-pool.js.map

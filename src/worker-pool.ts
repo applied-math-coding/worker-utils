@@ -29,7 +29,7 @@ class Task<T extends Fn = Fn>{
   }
 }
 
-export default class WorkerPool {
+export class WorkerPool {
   private uid = 0;
   private maxWorkers: number;
   private scheduled: Task[] = [];
