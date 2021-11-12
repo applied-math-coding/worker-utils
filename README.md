@@ -168,3 +168,23 @@ const results = await Promise.all(
 console.log(results);
 ```
 The ```addTask``` returns an object that contains the task's id and result which is a promise. The latter is resolved when the task has been executed by the ```WorkerPool```.
+## Subscribing to workers:
+Sometimes you want to use a worker for a background task that produces from time to time results. In such scenarios the concept of promises doesn't suite very well. What we actually want is an observable (see rxjs). Since the library intends to come out without any third party dependencies, the provided solution uses a classical subscription model:
+```
+import { createWorker } from '@applied.math.coding/worker-utils';
+const promises = [1, 2].map(() => new Promise<void>(
+      resolve => createWorker({
+        fn: () => {
+          for (let idx = 0; idx < 10; idx++) {
+            postMessage(idx);
+          }
+        },
+        subscription: d => {
+          console.log(d);
+          (d === 9) && resolve();
+        }
+      })()
+    ));
+    await Promise.all(promises);
+ ```
+The effect of supplying a subscription function is that each time the worker makes a call to postMessage, the subscription gets called with the corresponding data sent.
