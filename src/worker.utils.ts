@@ -2,13 +2,16 @@ export type Fn = (...args: any[]) => any;
 export type ToAsync<T extends Fn> = (...args: Parameters<T>) => Promise<ReturnType<T>>;
 export const WORKER = Symbol();
 export type WithWorker = { [WORKER]?: Worker };
+type WorkerExec<T extends Fn> = ToAsync<T> & WithWorker;
+export type TypedArrayConstructor = Int32ArrayConstructor | Float64ArrayConstructor;
+export type TypedArray<T extends TypedArrayConstructor> = T extends Int32ArrayConstructor ? Int32Array : Float64Array;
 
 export const createWorker = <T extends Fn>({ fn, context = [], transfer = [], subscription }: {
   fn: T | string,
   context?: (Fn | string)[],
   transfer?: Transferable[],
   subscription?: (d: any) => void
-}): ToAsync<T> & WithWorker => {
+}): WorkerExec<T> => {
   const b = new Blob([createWorkerSetup(fn, context)], { type: 'text/javascript' });
   const url = URL.createObjectURL(b);
   const w = new Worker(url);
@@ -58,9 +61,6 @@ export function split(n: number, steps: number): number[][] {
   }
   return res;
 }
-
-export type TypedArrayConstructor = Int32ArrayConstructor | Float64ArrayConstructor;
-export type TypedArray<T extends TypedArrayConstructor> = T extends Int32ArrayConstructor ? Int32Array : Float64Array;
 
 export function createSharedView<T extends TypedArrayConstructor>(data: Iterable<number>, Constructor: T): TypedArray<T> {
   const view = Constructor.from(data);
