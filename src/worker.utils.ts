@@ -2,7 +2,7 @@ export type Fn = (...args: any[]) => any;
 export type ToAsync<T extends Fn> = (...args: Parameters<T>) => Promise<ReturnType<T>>;
 export const WORKER = Symbol();
 export type WithWorker = { [WORKER]?: Worker };
-type WorkerExec<T extends Fn> = ToAsync<T> & WithWorker;
+export type WorkerExec<T extends Fn> = ToAsync<T> & WithWorker;
 export type TypedArrayConstructor = Int32ArrayConstructor | Float64ArrayConstructor;
 export type TypedArray<T extends TypedArrayConstructor> = T extends Int32ArrayConstructor ? Int32Array : Float64Array;
 

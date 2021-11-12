@@ -4,7 +4,7 @@ export declare const WORKER: unique symbol;
 export declare type WithWorker = {
     [WORKER]?: Worker;
 };
-declare type WorkerExec<T extends Fn> = ToAsync<T> & WithWorker;
+export declare type WorkerExec<T extends Fn> = ToAsync<T> & WithWorker;
 export declare type TypedArrayConstructor = Int32ArrayConstructor | Float64ArrayConstructor;
 export declare type TypedArray<T extends TypedArrayConstructor> = T extends Int32ArrayConstructor ? Int32Array : Float64Array;
 export declare const createWorker: <T extends Fn>({ fn, context, transfer, subscription }: {
@@ -19,5 +19,4 @@ export declare function createSharedView<T extends TypedArrayConstructor>(data: 
 export declare function createMutex(): Int32Array;
 export declare function lock(mutex: Int32Array): void;
 export declare function unlock(mutex: Int32Array): void;
-export {};
 //# sourceMappingURL=worker.utils.d.ts.map
